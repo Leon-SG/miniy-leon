@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miniy - AI Store Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    /* Default (Light Mode) scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F5F5F5; /* Light Panel Background */
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #BDBDBD; /* Light Border/Muted */
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0098ff; /* Primary Blue */
+    }
+
+    /* Dark Mode scrollbar */
+    .dark ::-webkit-scrollbar-track {
+      background: #1e1e1e; /* Dark Panel Background */
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #4a4a4a; 
+    }
+    .dark ::-webkit-scrollbar-thumb:hover {
+      background: #0098ff;
+    }
+
+    body {
+      font-family: 'Inter', 'SF Pro', sans-serif;
+      font-size: 14px;
+      /* Light theme defaults */
+      color: #212121; /* Light Text Main */
+      background-color: #FFFFFF; /* Light BG Main */
+      transition-property: color, background-color;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 300ms;
+    }
+    /* Dark theme overrides for body */
+    .dark body {
+      color: #f8f8f2; /* Dark Text Main */
+      background-color: #171717; /* Dark BG Main */
+    }
+    
+    .dark-preview-mode .mobile-preview-dark-bg {
+        background-color: #1e1e1e; 
+    }
+    .dark-preview-mode .mobile-preview-dark-text {
+        color: #f8f8f2; 
+    }
+    .dark-preview-mode .mobile-preview-dark-card-bg {
+        background-color: #2a2a2a; 
+    }
+     .dark-preview-mode .mobile-preview-dark-border {
+        border-color: #303030; 
+    }
+
+    @keyframes pulseBorderOpacity {
+      0%, 100% { border-opacity: 1; }
+      50% { border-opacity: 0.4; }
+    }
+    .chat-loading-pulse-opacity {
+      border-width: 1px; 
+      animation: pulseBorderOpacity 1.5s ease-in-out infinite;
+    }
+
+    .desktop-preview-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    /* Light mode desktop preview scrollbar */
+    .desktop-preview-scrollbar::-webkit-scrollbar-track {
+      background: #F5F5F5;
+    }
+    .desktop-preview-scrollbar::-webkit-scrollbar-thumb {
+      background: #BDBDBD;
+      border-radius: 3px;
+    }
+    .desktop-preview-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #0098ff;
+    }
+    /* Dark mode desktop preview scrollbar */
+    .dark .desktop-preview-scrollbar::-webkit-scrollbar-track {
+      background: #1e1e1e; 
+    }
+    .dark .desktop-preview-scrollbar::-webkit-scrollbar-thumb {
+      background: #4a4a4a; 
+    }
+    .dark .desktop-preview-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #0098ff; 
+    }
+
+    .loading-progress-bar {
+      height: 2px; 
+      width: 100%;
+      background-image: linear-gradient(
+        to right,
+        #0098ff, 
+        #007acc, 
+        #005c99, 
+        #007acc, 
+        #0098ff 
+      );
+      background-size: 200% 100%;
+      animation: moveGradient 1.5s linear infinite;
+    }
+
+    @keyframes moveGradient {
+      0% {
+        background-position: 100% 0;
+      }
+      100% {
+        background-position: -100% 0;
+      }
+    }
+
+    .preview-element-actively-selected {
+      outline: 2px solid #0098ff !important; 
+      outline-offset: 2px !important;
+      box-shadow: 0 0 0 4px rgba(0, 152, 255, 0.3) !important; 
+      border-radius: 4px !important; 
+    }
+    
+    .styled-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    /* Light mode styled scrollbar */
+    .styled-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .styled-scrollbar::-webkit-scrollbar-thumb {
+      background: #BDBDBD; 
+      border-radius: 3px;
+    }
+    .styled-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #0098ff; 
+    }
+    /* Dark mode styled scrollbar */
+    .dark .styled-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .dark .styled-scrollbar::-webkit-scrollbar-thumb {
+      background: #4a4a4a; 
+    }
+    .dark .styled-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #0098ff; 
+    }
+
+    html, body, #root {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.3.0",
+    "@heroicons/react/": "https://esm.sh/@heroicons/react@^2.2.0/",
+    "chart.js": "https://esm.sh/chart.js@^4.4.3/auto",
+    "chart.js/helpers": "https://esm.sh/chart.js@^4.4.3/helpers",
+    "phosphor-react": "https://esm.sh/phosphor-react@^1.4.1",
+    "@/App": "/App.tsx",
+    "@/icons": "/icons.tsx"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'SF Pro', 'sans-serif'], 
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+          fontSize: {
+            'xs': '12px',
+            'sm': '14px', // Base UI for Replit uses 13px, Tailwind's 'sm' (14px) is closest
+            'base': '14px',
+            'lg': '16px',
+            'xl': '18px',
+            '2xl': '20px',
+          },
+          borderRadius: {
+            'md': '6px', 
+          },
+          boxShadow: {
+            'subtle': '0 4px 6px rgba(0,0,0,0.1)', // Dark mode subtle shadow
+            'light-subtle': '0 2px 4px rgba(0,0,0,0.05)', // Light mode subtle shadow
+          },
+          colors: {
+            // Replit Shared
+            'replit-primary-blue': '#0098ff', // Used for accents, focus rings in both themes
+            'replit-primary-blue-darker': '#007acc', // For hover states
+
+            // Replit Dark Theme (Original)
+            'replit-dark-bg': '#171717',
+            'replit-dark-panel-bg': '#1e1e1e',
+            'replit-dark-border': '#303030',
+            'replit-dark-border-muted': '#4a4a4a',
+            'replit-dark-text-main': '#f8f8f2',
+            'replit-dark-text-secondary': '#a9a9a9',
+            'replit-dark-text-disabled': '#6c6c6c',
+
+            // Replit Light Theme (New)
+            'replit-light-bg': '#FFFFFF',
+            'replit-light-panel-bg': '#F5F5F5',
+            'replit-light-border': '#E0E0E0',
+            'replit-light-border-muted': '#BDBDBD', // For lighter borders or muted elements
+            'replit-light-text-main': '#212121',
+            'replit-light-text-secondary': '#616161',
+            'replit-light-text-disabled': '#9E9E9E',
+
+            // Functional Colors (Dark Mode)
+            'replit-dark-green': '#4CAF50',
+            'replit-dark-yellow': '#FFC107',
+            'replit-dark-red': '#F44336',
+            'replit-dark-link-blue': '#3b82f6',
+
+            // Functional Colors (Light Mode)
+            'replit-light-green': '#2E7D32',
+            'replit-light-yellow': '#F9A825',
+            'replit-light-red': '#D32F2F',
+            'replit-light-red-border': '#D32F2F', // For buttons
+            'replit-light-red-text': '#D32F2F', // For button text
+            'replit-light-link-blue': '#1565C0',
+            
+            // --- Semantic Aliases for easier use in components ---
+            // These will resolve to light or dark values based on the 'dark' class on <html>
+            
+            // Backgrounds
+            'BACKGROUND_MAIN': '#FFFFFF', // Light default
+            'BACKGROUND_CONTENT': '#F5F5F5', // Light default
+
+            // Text
+            'TEXT_PRIMARY': '#212121', // Light default
+            'TEXT_SECONDARY': '#616161', // Light default
+            'TEXT_MUTED': '#9E9E9E', // Light default
+
+            // Borders
+            'BORDER_DEFAULT': '#E0E0E0', // Light default
+            'BORDER_MUTED': '#BDBDBD', // Light default
+            'BORDER_INPUT_FOCUS': '#0098ff', // Shared primary blue
+
+            // Functional (using light mode values as default, dark will override)
+            'SUCCESS_GREEN': '#2E7D32',
+            'WARNING_YELLOW': '#F9A825',
+            'ERROR_RED': '#D32F2F',
+            'INFO_BLUE': '#1565C0', // Using link blue for info
+
+            // Primary/Accent (using shared blue as default for accent)
+            'PRIMARY_MAIN': '#0098ff',
+            'PRIMARY_DARK': '#007acc', // Darker shade for hover/active
+            'ACCENT_MAIN': '#0098ff', 
+            'ACCENT_DARK': '#007acc',
+          }
+        },
+      },
+      // For semantic mapping in JS components (like Analytics)
+      // This is a simplified representation for utility JS code, actual theming is via Tailwind JIT
+      plugins: [
+        function({ addBase, theme }) {
+          addBase({
+            '.dark': {
+              '--color-BACKGROUND_MAIN': theme('colors.replit-dark-bg'),
+              '--color-BACKGROUND_CONTENT': theme('colors.replit-dark-panel-bg'),
+              '--color-TEXT_PRIMARY': theme('colors.replit-dark-text-main'),
+              '--color-TEXT_SECONDARY': theme('colors.replit-dark-text-secondary'),
+              '--color-TEXT_MUTED': theme('colors.replit-dark-text-disabled'),
+              '--color-BORDER_DEFAULT': theme('colors.replit-dark-border'),
+              '--color-BORDER_MUTED': theme('colors.replit-dark-border-muted'),
+              '--color-SUCCESS_GREEN': theme('colors.replit-dark-green'),
+              '--color-WARNING_YELLOW': theme('colors.replit-dark-yellow'),
+              '--color-ERROR_RED': theme('colors.replit-dark-red'),
+              '--color-INFO_BLUE': theme('colors.replit-dark-link-blue'),
+            }
+          })
+        }
+      ]
+    }
+  </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
