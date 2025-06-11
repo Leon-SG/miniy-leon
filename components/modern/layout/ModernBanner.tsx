@@ -54,8 +54,8 @@ const ModernBanner: React.FC<ModernBannerProps> = ({ children, showUserMessage =
   return (
     <>
       <div
-        className="w-full rounded-2xl px-4 py-3 flex items-center gap-3 shadow-lg animate-fade-in"
-        style={{ background: BANNER_COLOR, color: '#222', fontWeight: 600, fontSize: '1.1rem', minHeight: 48 }}
+        className="w-full rounded-2xl px-3 py-3 flex items-center gap-3 shadow-lg animate-fade-in"
+        style={{ background: BANNER_COLOR, color: '#222', fontWeight: 600, fontSize: '1.1rem', minHeight: 30 }}
       >
         <FireIcon className="w-6 h-6 text-[#222]" />
         <span className="flex-1 truncate">{BANNER_TEXTS[current]}</span>

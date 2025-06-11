@@ -98,9 +98,9 @@ const ModernProductList: React.FC<ModernProductListProps> = ({
             <button
               key={category}
               onClick={() => onCategoryChange(category)}
-              className={`px-2 py-1 rounded-xl text-xs font-bold transition-colors border-2 ${
+              className={`px-3 py-1.5 rounded-xl text-sm font-bold transition-colors border-2 ${
                 selectedCategory === category
-                  ? 'bg-[#FFD600] text-black border-[#FFD600]' : 'bg-[#222] text-[#FFD600] border-[#FFD600] hover:bg-[#FFD600] hover:text-black'
+                  ? 'bg-[#D4FF00] text-black border-[#D4FF00]' : 'bg-[#222] text-[#D4FF00] border-[#D4FF00] hover:bg-[#D4FF00] hover:text-black'
               }`}
               style={{ minWidth: 48 }}
             >
@@ -113,7 +113,7 @@ const ModernProductList: React.FC<ModernProductListProps> = ({
         <select
           value={sortBy}
           onChange={(e) => onSortByChange(e.target.value)}
-          className="px-5 py-2 rounded-2xl border-2 text-lg font-bold bg-[#222] text-[#FFD600] border-[#FFD600] focus:outline-none focus:ring-2"
+          className="px-3 py-1.5 rounded-xl border-2 text-sm font-bold bg-[#222] text-[#D4FF00] border-[#D4FF00] focus:outline-none focus:ring-2"
           style={{ minWidth: 120 }}
         >
           {SORT_OPTIONS.map((option) => (

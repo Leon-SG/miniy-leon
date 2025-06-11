@@ -11,47 +11,10 @@ import ModernBottomNav from '../components/modern/layout/ModernBottomNav';
 import ModernStoreHeader from '../components/modern/layout/ModernStoreHeader';
 import ModernCheckout from '../components/modern/checkout/ModernCheckout';
 import { motion, AnimatePresence } from 'framer-motion';
+import { INITIAL_STORE_CONFIG } from '../constants';
 
-// Mock data
-const mockProducts: Product[] = [
-  {
-    id: "1",
-    name: "Modern Designer Chair",
-    description: "Minimalist and elegant, fits any space perfectly.",
-    price: 299.99,
-    imageUrl: "https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1",
-    category: "Furniture",
-    sku: "CHAIR-001",
-    stockQuantity: 12,
-    tags: ["Home", "Design", "Comfort"],
-    isFeatured: true,
-    isPublished: true,
-  },
-  {
-    id: "2",
-    name: "Smart Watch",
-    description: "Track your health data and stay active.",
-    price: 199.99,
-    imageUrl: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a",
-    category: "Electronics",
-    sku: "WATCH-002",
-    stockQuantity: 30,
-    tags: ["Tech", "Health"],
-    isPublished: true,
-  },
-  {
-    id: "3",
-    name: "Organic Skincare Set",
-    description: "Natural ingredients to care for your skin.",
-    price: 89.99,
-    imageUrl: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b",
-    category: "Beauty",
-    sku: "SKIN-003",
-    stockQuantity: 50,
-    tags: ["Skincare", "Organic"],
-    isPublished: true,
-  },
-];
+// 使用constants.tsx中的商品数据
+const mockProducts: Product[] = INITIAL_STORE_CONFIG.products;
 
 const mockAppearance: AppearanceSettings = {
   primaryColor: "#FFD600",
