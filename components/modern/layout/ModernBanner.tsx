@@ -60,7 +60,7 @@ const ModernBanner: React.FC<ModernBannerProps> = ({ children, showUserMessage =
         <FireIcon className="w-6 h-6 text-[#222]" />
         <span className="flex-1 truncate">{BANNER_TEXTS[current]}</span>
         <span className="text-xs font-mono bg-black/10 rounded px-2 py-1 ml-2 flex items-center gap-1" style={{ color: '#222' }}>
-          <ClockIcon className="w-4 h-4" /> Left {timeLeft}
+          <ClockIcon className="w-4 h-4" /> {timeLeft} left
         </span>
       </div>
       {children}
