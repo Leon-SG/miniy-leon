@@ -38,7 +38,7 @@ const createFullBasicInfoExample = (basicInfo?: Partial<BasicInfo>): BasicInfo =
   };
 };
 
-// 用于持久化 mockStep 和 mockStore 的全局 ref
+// Global ref for persisting mockStep and mockStore
 let _mockStep = 0;
 let _mockStore: StoreConfiguration = {
   basicInfo: {
@@ -79,7 +79,7 @@ export const generateStoreUpdateFromText = async (
   try {
     const response = await callClaudeApi(userInput, currentStoreConfig, 'claude-3-7-sonnet-20250219');
     
-    // 如果响应中包含商品信息，自动获取商品图片
+    // If response contains product information, automatically get product image
     if (response.storeConfig?.products) {
       const updatedProducts = await Promise.all(
         response.storeConfig.products.map(async (product: any) => {
@@ -91,7 +91,7 @@ export const generateStoreUpdateFromText = async (
                 image: imageUrl
               };
             } catch (error) {
-              console.error(`获取商品 ${product.name} 的图片失败:`, error);
+              console.error(`Failed to get image for product ${product.name}:`, error);
               return product;
             }
           }
