@@ -20,7 +20,7 @@ interface ModernProductListProps {
   activelySelectedPreviewElementId?: string | null;
 }
 
-// 品牌logo数据
+// Brand logo data
 const BRANDS = [
   { name: 'SONY', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Sony_logo.svg' },
   { name: 'LG', logo: 'https://upload.wikimedia.org/wikipedia/commons/1/12/LG_logo_%282015%29.svg' },
@@ -48,11 +48,11 @@ const ModernProductList: React.FC<ModernProductListProps> = ({
   onElementSelected = () => {},
   activelySelectedPreviewElementId,
 }) => {
-  // 过滤和排序商品
+  // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
     let productsToDisplay = [...products];
 
-    // 搜索过滤
+    // Search filter
     if (searchTerm && isSearchActive) {
       productsToDisplay = productsToDisplay.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -60,14 +60,14 @@ const ModernProductList: React.FC<ModernProductListProps> = ({
       );
     }
 
-    // 分类过滤
+    // Category filter
     if (selectedCategory !== 'All') {
       productsToDisplay = productsToDisplay.filter(product => 
         product.category === selectedCategory
       );
     }
 
-    // 排序
+    // Sort
     switch (sortBy) {
       case 'price_asc':
         productsToDisplay.sort((a, b) => a.price - b.price);

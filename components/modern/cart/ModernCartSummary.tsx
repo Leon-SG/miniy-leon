@@ -26,17 +26,17 @@ const ModernCartSummary: React.FC<ModernCartSummaryProps> = ({
   if (!isOpen) return null;
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = 5.99; // 示例运费
+  const shipping = 5.99; // Example shipping fee
   const total = subtotal + shipping;
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto" style={{ fontFamily: 'Inter, Helvetica Neue, Arial, sans-serif' }}>
       <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        {/* 背景遮罩 */}
+        {/* Background overlay */}
         <div className="fixed inset-0 bg-black bg-opacity-70 transition-opacity" onClick={onClose} />
-        {/* 弹窗内容 */}
+        {/* Modal content */}
         <div className="relative inline-block w-full max-w-md transform overflow-hidden rounded-3xl bg-[#181818] text-left align-bottom shadow-2xl transition-all sm:my-8 sm:align-middle border-2 border-[#D4FF00]">
-          {/* 标题栏 */}
+          {/* Title bar */}
           <div className="flex items-center justify-between px-6 pt-6 pb-3 border-b-2 border-[#D4FF00] bg-[#181818] rounded-t-3xl sticky top-0 z-10">
             <div className="flex items-center gap-2">
               <ShoppingCartIcon className="w-6 h-6 text-[#D4FF00]" />
@@ -46,13 +46,13 @@ const ModernCartSummary: React.FC<ModernCartSummaryProps> = ({
               <XMarkIcon className="w-6 h-6" />
             </button>
           </div>
-          {/* 购物车商品列表 */}
+          {/* Cart items list */}
           <div className="mt-2 max-h-[60vh] overflow-y-auto px-6 pb-2">
             {cartItems.length > 0 ? (
               <div className="space-y-4">
                 {cartItems.map((item) => (
                   <div key={item.id} className="flex items-center gap-4 rounded-2xl bg-black border-2 border-[#D4FF00] p-3 shadow-md">
-                    {/* 商品图片 */}
+                    {/* Product image */}
                     <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-[#222] flex items-center justify-center">
                       {item.imageUrl ? (
                         <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover rounded-xl" />
@@ -60,11 +60,11 @@ const ModernCartSummary: React.FC<ModernCartSummaryProps> = ({
                         <ShoppingCartIcon className="w-8 h-8 text-[#D4FF00]" />
                       )}
                     </div>
-                    {/* 商品信息 */}
+                    {/* Product info */}
                     <div className="flex-1 min-w-0">
                       <h4 className="text-base font-bold text-[#D4FF00] truncate">{item.name}</h4>
-                      <p className="text-xs text-[#D4FF00] opacity-70 mt-1">￥{item.price}</p>
-                      {/* 数量控制 */}
+                      <p className="text-xs text-[#D4FF00] opacity-70 mt-1">${item.price}</p>
+                      {/* Quantity controls */}
                       <div className="mt-2 flex items-center gap-2">
                         <button onClick={() => onDecrementItem(item.id)} className="rounded-full p-1 bg-black border-2 border-[#D4FF00] text-[#D4FF00] hover:bg-[#D4FF00] hover:text-black transition-colors">
                           <MinusIcon className="w-4 h-4" />
@@ -75,7 +75,7 @@ const ModernCartSummary: React.FC<ModernCartSummaryProps> = ({
                         </button>
                       </div>
                     </div>
-                    {/* 删除按钮 */}
+                    {/* Delete button */}
                     <button onClick={() => onRemoveItem(item.id)} className="rounded-full p-2 hover:bg-red-500 hover:text-white text-red-400 transition-colors">
                       <TrashIcon className="w-5 h-5" />
                     </button>
@@ -90,24 +90,24 @@ const ModernCartSummary: React.FC<ModernCartSummaryProps> = ({
               </div>
             )}
           </div>
-          {/* 价格摘要 */}
+          {/* Price summary */}
           {cartItems.length > 0 && (
             <div className="mt-4 space-y-2 border-t-2 border-[#D4FF00] pt-4 px-6">
               <div className="flex justify-between text-base font-bold text-[#D4FF00]">
                 <span>Subtotal</span>
-                <span>￥{subtotal.toFixed(2)}</span>
+                <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm text-[#D4FF00] opacity-80">
                 <span>Shipping</span>
-                <span>￥{shipping.toFixed(2)}</span>
+                <span>${shipping.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-lg font-extrabold text-[#D4FF00]">
                 <span>Total</span>
-                <span>￥{total.toFixed(2)}</span>
+                <span>${total.toFixed(2)}</span>
               </div>
             </div>
           )}
-          {/* 底部按钮 */}
+          {/* Bottom buttons */}
           <div className="bg-[#181818] px-6 py-5 rounded-b-3xl flex flex-col gap-3">
             {cartItems.length > 0 ? (
               <button

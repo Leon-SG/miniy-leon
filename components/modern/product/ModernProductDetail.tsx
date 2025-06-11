@@ -73,7 +73,7 @@ const ModernProductDetail: React.FC<ModernProductDetailProps> = ({
             </div>
             {/* Price + Stock */}
             <div className="flex items-center gap-4 mb-4">
-              <span className="text-3xl font-extrabold text-[#D4FF00] drop-shadow">￥{product.price}</span>
+              <span className="text-3xl font-extrabold text-[#D4FF00] drop-shadow">${product.price}</span>
               <span className="text-xs text-[#D4FF00] opacity-70">Stock: {product.stockQuantity ?? '--'}</span>
             </div>
             {/* Description */}

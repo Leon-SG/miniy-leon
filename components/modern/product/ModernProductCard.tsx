@@ -37,7 +37,7 @@ const ModernProductCard: React.FC<ModernProductCardProps> = ({
       data-selectable-id={productCardElementId}
       data-selectable-name={product.name}
     >
-      {/* 收藏icon/折扣标签 */}
+      {/* Favorite icon/Discount tag */}
       <div className="absolute top-3 right-3 flex flex-col items-end gap-2 z-10">
         <button className="rounded-full bg-black/60 hover:bg-[#D4FF00] hover:text-black text-[#D4FF00] p-2 shadow transition-colors">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -47,11 +47,11 @@ const ModernProductCard: React.FC<ModernProductCardProps> = ({
         {product.isFeatured && (
           <span className="bg-[#D4FF00] text-black text-xs font-bold px-2 py-0.5 rounded-full shadow">Featured</span>
         )}
-        {product.tags?.includes('折扣') && (
+        {product.tags?.includes('discount') && (
           <span className="bg-pink-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">-50%</span>
         )}
       </div>
-      {/* 商品图片 */}
+      {/* Product image */}
       <div className="w-full h-32 sm:h-40 rounded-2xl overflow-hidden mb-3 sm:mb-4 flex items-center justify-center bg-black relative">
         {product.imageUrl ? (
           (() => {
@@ -75,13 +75,13 @@ const ModernProductCard: React.FC<ModernProductCardProps> = ({
           <div className="w-full h-full flex items-center justify-center text-3xl sm:text-5xl text-[#D4FF00]">🛒</div>
         )}
       </div>
-      {/* 商品名 */}
+      {/* Product name */}
       <h2 className="text-xl sm:text-2xl font-extrabold text-[#D4FF00] mb-1 sm:mb-2 text-center tracking-wide flex items-center gap-1">
         {product.name} <span className="text-lg">✨</span>
       </h2>
-      {/* 商品描述 */}
+      {/* Product description */}
       <p className="text-sm sm:text-base text-[#D4FF00] opacity-80 mb-2 sm:mb-4 text-center" style={{ minHeight: 32 }}>{product.description}</p>
-      {/* 价格+加购按钮 */}
+      {/* Price + Add to cart button */}
       <div className="flex items-center justify-between w-full mt-auto gap-2">
         <span className="text-2xl font-extrabold text-[#D4FF00] drop-shadow-sm">${product.price}</span>
         <button

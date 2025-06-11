@@ -108,7 +108,7 @@ export const generateStoreUpdateFromText = async (
       aiCard: response.aiCard
     };
   } catch (error) {
-    console.error('生成商店更新失败:', error);
+    console.error('Failed to generate store update:', error);
     throw error;
   }
 };
@@ -130,7 +130,7 @@ export const generateAiSupportResponse = async (
   return `AI Support: Thank you for your message! (${userMessage})`;
 };
 
-// LLM模式API调用函数
+// LLM mode API call function
 export async function callClaudeApi(
   messageText: string,
   storeConfig: any,

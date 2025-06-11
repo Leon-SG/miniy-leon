@@ -12,7 +12,7 @@ import ModernStoreHeader from '../components/modern/layout/ModernStoreHeader';
 import ModernCheckout from '../components/modern/checkout/ModernCheckout';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// 模拟数据
+// Mock data
 const mockProducts: Product[] = [
   {
     id: "1",
@@ -65,7 +65,7 @@ const StorePreview: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
 
-  // 新增：分类、排序、搜索等状态
+  // New: Category, sorting, search states
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [sortBy, setSortBy] = useState<string>('default');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -78,20 +78,20 @@ const StorePreview: React.FC = () => {
 
   const [isSocialCollapsed, setIsSocialCollapsed] = useState(false);
 
-  // 自动提取所有类别
+  // Auto-extract all categories
   const categories = useMemo(() => {
     const cats = Array.from(new Set(mockProducts.map(p => p.category)));
     return ['All', ...cats];
   }, []);
 
-  // Toast 状态
+  // Toast state
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
 
-  // 新增：结账状态
+  // New: Checkout state
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  // 支持详情页加购后自动关闭弹窗并弹 Toast
+  // Support auto-close detail modal and show toast after adding to cart
   const handleAddToCart = (product: Product, fromDetail = false) => {
     const prodWithQty = product as Product & { quantity?: number };
     setCart(prevCart => {
@@ -106,7 +106,7 @@ const StorePreview: React.FC = () => {
       return [...prevCart, { ...product, quantity: prodWithQty.quantity || 1 }];
     });
     if (fromDetail) {
-      setToastMsg('已加入购物车！');
+      setToastMsg('Added to cart!');
       setShowToast(true);
       setIsProductDetailOpen(false);
     } else {
@@ -151,7 +151,7 @@ const StorePreview: React.FC = () => {
     }
   };
 
-  // Toast 自动消失
+  // Auto-hide toast
   useEffect(() => {
     if (showToast) {
       const timer = setTimeout(() => setShowToast(false), 2000);
@@ -160,17 +160,17 @@ const StorePreview: React.FC = () => {
   }, [showToast]);
 
   const handlePlaceOrder = () => {
-    // 这里可以添加订单处理逻辑
+    // Add order processing logic here
     alert('Order placed successfully!');
     setIsCheckoutOpen(false);
-    setCart([]); // 清空购物车
+    setCart([]); // Clear cart
   };
 
   return (
     <div className="h-screen bg-black w-full flex flex-col justify-between" style={{ color: '#D4FF00', fontFamily: 'Inter, Helvetica Neue, Arial, sans-serif' }}>
-      {/* 顶部区域：商店标题栏、横幅、搜索框、社交图标区 */}
+      {/* Top area: Store header, banner, search bar, social icons */}
       <header className="w-full max-w-full sm:max-w-2xl lg:max-w-4xl mx-auto px-4 pt-6 pb-2">
-        {/* 商店标题栏 */}
+        {/* Store header */}
         <ModernStoreHeader 
           storeName="GENZ Store" 
           cartCount={cart.length} 
@@ -181,7 +181,7 @@ const StorePreview: React.FC = () => {
             if (mainRef.current) mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         />
-        {/* 动态横幅插槽 */}
+        {/* Dynamic banner slot */}
         <div className="mb-7">
           <ModernBanner showUserMessage={!isSocialCollapsed}>
             <AnimatePresence initial={false}>
@@ -202,7 +202,7 @@ const StorePreview: React.FC = () => {
             </AnimatePresence>
           </ModernBanner>
         </div>
-        {/* 搜索框插槽 */}
+        {/* Search bar slot */}
         <AnimatePresence initial={false}>
           {!isSocialCollapsed && (
             <motion.div
@@ -219,7 +219,7 @@ const StorePreview: React.FC = () => {
             </motion.div>
           )}
         </AnimatePresence>
-        {/* 社交图标区插槽 */}
+        {/* Social icons slot */}
         <AnimatePresence initial={false}>
           {!isSocialCollapsed && (
             <motion.div
@@ -237,7 +237,7 @@ const StorePreview: React.FC = () => {
           )}
         </AnimatePresence>
       </header>
-      {/* 主要内容区域 */}
+      {/* Main content area */}
       <main ref={mainRef} className="flex-1 w-full max-w-full sm:max-w-2xl lg:max-w-4xl mx-auto px-4 py-2 sm:py-4 pb-32 overflow-y-auto">
         <div ref={categoryRef} />
         <ModernProductList
@@ -257,18 +257,18 @@ const StorePreview: React.FC = () => {
           appearance={mockAppearance}
         />
       </main>
-      {/* Modern Footer（可选） */}
-      {/* <ModernFooter storeName="GENZ 商店" appearance={mockAppearance} /> */}
-      {/* 底部导航插槽 */}
+      {/* Modern Footer (optional) */}
+      {/* <ModernFooter storeName="GENZ Store" appearance={mockAppearance} /> */}
+      {/* Bottom navigation slot */}
       <ModernBottomNav active={activeTab} onChange={handleTab} cartCount={cart.length} />
-      {/* 极简版权区，Tab下方一行显示 */}
+      {/* Minimal copyright area, displayed below Tab */}
       <div className="w-full flex justify-center items-center fixed left-0 z-50" style={{ bottom: 2, pointerEvents: 'none' }}>
         <span className="bg-black/80 rounded-full px-2 py-0.5 text-[10px] text-[#D4FF00] font-bold tracking-wide flex items-center gap-2 shadow-sm" style={{ pointerEvents: 'auto' }}>
           © {new Date().getFullYear()} GENZ Store · Powered by Miniy
         </span>
       </div>
-      {/* 客服/AI助手浮动按钮、购物车弹窗、产品详情弹窗等保留 */}
-      {/* 已移除右下角客服和AI助手浮动按钮 */}
+      {/* Customer service/AI assistant floating buttons, cart modal, product detail modal, etc. */}
+      {/* Removed bottom-right customer service and AI assistant floating buttons */}
       <ModernCartSummary
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
